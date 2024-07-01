@@ -6,7 +6,7 @@
       <!-- logo -->
       <div class="w-auto">
         <a
-          href="#"
+          [routerLink]="['/']"
           class="w-[46px] h-[46px] bg-main-200 rounded-full flex justify-center items-center text-white"
         >
           <div class="pi pi-code text-[26px]"></div>
@@ -15,7 +15,7 @@
       </div>
 
       <!-- search bar -->
-      <div class="w-2/4 h-[46px] rounded-full flex justify-start items-center">
+      <form class="w-2/4 h-[46px] rounded-full flex justify-start items-center" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
         <a
           href="#"
           class="w-[24px] h-[24px] ml-[12px] flex justify-center items-center absolute"
@@ -26,8 +26,10 @@
           type="text"
           class="w-full h-[46px] border-2 bg-main-100 rounded-full text-gray-700 text-[14px] outline-none pl-10"
           placeholder="Search"
+          formControlName="search"
         />
-      </div>
+        <!-- <input type="submit" class="hidden" /> -->
+      </form>
     </section>
 
     <!-- Acocunt, notifications, alerts and cart -->

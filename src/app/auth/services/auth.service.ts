@@ -9,35 +9,33 @@ import { RegisterData } from '../interfaces/register-data.interface';
   providedIn: 'root',
 })
 export class AuthService {
-  public user?: User;
-  private baseUrl = `${environment.baseUrl}/auth`;
+  private baseUrl = environment.baseUrl;
 
   constructor(private readonly http: HttpClient) {}
 
   login(email: string, password: string): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}/login`, {
+    return this.http.post<User>(`${this.baseUrl}/auth/login`, {
       email,
       password,
-    }).pipe(
-      tap(user => this.user = user)
-    );
+    });
   }
 
   register(user: RegisterData): Observable<User> {
-    return this.http.post<User>(`${this.baseUrl}/register`, user).pipe(
-      tap(user => this.user = user)
-    );
+    return this.http.post<User>(`${this.baseUrl}/auth/register`, user);
+  }
+
+  getProfile(): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/users/me`);
+  }
+
+  updateProfile(user: User): Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/users/me`, user);
   }
 
   checkStatus(): Observable<boolean> {
-    return this.http.get<User>(`${this.baseUrl}/check-status`).pipe(
+    return this.http.get<User>(`${this.baseUrl}/auth/check-status`).pipe(
       map(({ token }) => !!token),
-      catchError(() => of(false)),
+      catchError(() => of(false))
     );
-  }
-
-  logout(): void {
-    this.user = undefined;
-    localStorage.removeItem('token');
   }
 }

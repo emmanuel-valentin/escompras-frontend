@@ -1,0 +1,85 @@
+<div class="bg-gray-100 rounded-lg p-16 lg:p-20 mt-20 w-full">
+  <h2 class="text-gray-900 text-3xl font-semibold mb-5">
+    {{ currentPost.postId ? "Actualizar post" : "Nuevo post" }}
+  </h2>
+  <form [formGroup]="newPostForm" (ngSubmit)="onSubmit()">
+    <div class="relative mb-4">
+      <label for="title" class="leading-7 text-sm text-gray-600">
+        Título
+      </label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="title"
+      />
+    </div>
+    <div class="relative mb-4">
+      <label for="content" class="leading-7 text-sm text-gray-600">
+        Descripción
+      </label>
+      <input
+        type="text"
+        id="content"
+        name="content"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="content"
+      />
+    </div>
+    <div class="relative mb-4">
+      <label for="price" class="leading-7 text-sm text-gray-600">
+        Precio
+      </label>
+      <input
+        type="number"
+        id="price"
+        name="price"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="price"
+      />
+    </div>
+    <div class="relative mb-4">
+      <label for="tag" class="leading-7 text-sm text-gray-600"> Tag </label>
+      <input
+        type="text"
+        id="tag"
+        name="tag"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="tag"
+      />
+    </div>
+
+    <div class="relative mb-4">
+      <label for="tag" class="leading-7 text-sm text-gray-600"> Foto </label>
+      <input
+        type="file"
+        id="photo"
+        name="photo"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        accept="image/*"
+        (change)="onFileChange($event)"
+      />
+    </div>
+
+    <div class="relative mb-4">
+      <label for="published" class="leading-7 flex gap-2 text-gray-600">
+        <input
+          type="checkbox"
+          id="published"
+          name="published"
+          class="bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+          formControlName="published"
+        />
+        Publicar en el feed
+      </label>
+    </div>
+
+    <button
+      class="text-white bg-main border-0 py-2 px-8 w-full focus:outline-none hover:bg-blue-700 rounded text-lg"
+      type="submit"
+    >
+      {{ currentPost.postId ? "Actualizar" : "Crear" }}
+    </button>
+  </form>
+</div>

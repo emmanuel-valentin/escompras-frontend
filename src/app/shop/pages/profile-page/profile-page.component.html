@@ -1,10 +1,8 @@
 <section class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto flex flex-col">
-    <div class="lg:w-4/6 mx-auto">
-      <div class="flex flex-col sm:flex-row">
-        <div
-          class="sm:w-1/3 xl:w-full md:w-full 2xl:scale-100 text-center sm:py-8 sm:px-4"
-        >
+  <div class="px-5 mt-10 mx-auto flex flex-col">
+    <div class="flex flex-col">
+      <div class="sm:py-8 sm:px-4">
+        <div class="text-center">
           <div
             class="w-20 h-20 rounded-full inline-flex items-center justify-center bg-gray-200 text-gray-400"
           >
@@ -21,28 +19,120 @@
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </div>
-          <div class="flex flex-col items-center text-center justify-center">
-            <h2 class="font-medium title-font mt-4 text-gray-900 text-lg">
-              User name
-            </h2>
-            <div class="w-12 h-1 bg-main-200 rounded mt-2 mb-4"></div>
-            <p class="text-base">
-              Raclette knausgaard hella meggs normcore williamsburg enamel pin
-              sartorial venmo tbh hot chicken gentrify portland.
-            </p>
-          </div>
-          <!-- Posts -->
-          <div class="w-full h-40 mt-10 flex items-center">
-            <a
-              class="w-full h-full shadow-md border-l-8 border-l-main-200/30 rounded flex items-center justify-center"
-              href="#"
+        </div>
+        <form
+          class="w-full my-10 p-4 bg-slate-50 border-l-8 border-l-main-200/30 rounded"
+          [formGroup]="editProfileForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <!-- Título y control de edición -->
+          <div class="flex justify-between items-center g">
+            <p class="text-xl mb-8 font-semibold">Mi perfil</p>
+            <button
+              class="flex items-center gap-2 bg-blue-100 px-4 py-2 rounded text-main"
+              type="button"
+              (click)="toggleEdit()"
             >
-              <p class="text-xl font-semibold">My posts</p>
-            </a>
+              <div class="pi pi-user-edit text-3xl"></div>
+              {{ editProfileForm.enabled ? "Cancelar" : "Editar" }}
+            </button>
+          </div>
+          <!-- [formGroup]="registerForm" (ngSubmit)="onSubmit()" -->
+          <div class="relative mb-4">
+            <label for="firstName" class="leading-7 text-sm text-gray-600"
+              >Nombre(s)</label
+            >
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              class="w-full bg-white rounded border border-gray-300 focus:border-blue-100 focus:ring-2 focus:ring-main-100 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              formControlName="firstName"
+            />
           </div>
 
-          <!--  -->
-        </div>
+          <div class="relative mb-4">
+            <label for="lastName" class="leading-7 text-sm text-gray-600"
+              >Apellido(s)</label
+            >
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              class="w-full bg-white rounded border border-gray-300 focus:border-blue-100 focus:ring-2 focus:ring-main-100 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              formControlName="lastName"
+            />
+          </div>
+
+          <div class="relative mb-4">
+            <label for="phone" class="leading-7 text-sm text-gray-600"
+              >Teléfono</label
+            >
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="w-full bg-white rounded border border-gray-300 focus:border-blue-100 focus:ring-2 focus:ring-main-100 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              formControlName="phone"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="text-white bg-main border-0 py-2 px-8 w-full focus:outline-none hover:bg-blue-700 rounded text-lg"
+            [ngClass]="{ 'bg-gray-500 hover:bg-gray-500': !editProfileForm.enabled || isLoading}"
+            [disabled]="!editProfileForm.enabled || isLoading"
+          >
+            {{ isLoading ? "Guardando..." : "Guardar" }}
+          </button>
+        </form>
+        <!-- Posts -->
+        <section
+          class="w-full my-10 p-4 bg-slate-50 border-l-8 border-l-main-200/30 rounded"
+        >
+          <p class="text-xl mb-8 font-semibold">Mis publicaciones</p>
+          <div
+            *ngIf="posts.length > 0; else noPosts"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2"
+          >
+            <app-shop-post-feed
+              *ngFor="let post of posts"
+              [post]="post"
+              [routerLink]="['/shop/edit-post', post.postId]"
+            ></app-shop-post-feed>
+          </div>
+          <ng-template #noPosts>
+            <div class="flex flex-col items-center gap-4 mt-10 text-gray-400">
+              <div class="pi pi-file-o text-8xl"></div>
+              <p class="text-center w-full">
+                No hay publicaciones de productos
+              </p>
+            </div>
+          </ng-template>
+        </section>
+
+        <!-- Borradores -->
+        <section
+          class="w-full my-10 p-4 border-l-8 border-l-main-200/30 rounded"
+        >
+          <p class="text-xl mb-8 font-semibold">Mis borradores</p>
+          <div
+            *ngIf="posts.length > 0; else noPosts"
+            class="grid grid-cols-3 gap-2"
+          >
+            <app-shop-post-feed
+              *ngFor="let draft of drafts"
+              [post]="draft"
+              [routerLink]="['/shop/edit-post', draft.postId]"
+            ></app-shop-post-feed>
+          </div>
+          <ng-template #noPosts>
+            <div class="gap-4 mt-10 text-gray-400">
+              <div class="pi pi-file-o text-8xl"></div>
+              <p class="">No hay borradores de productos</p>
+            </div>
+          </ng-template>
+        </section>
       </div>
     </div>
   </div>

@@ -47,6 +47,12 @@ export class LoginPageComponent {
           }
         })
       )
-      .subscribe(() => this.router.navigate(['/']));
+      .subscribe({
+        complete: () => this.router.navigate(['/']),
+        error: (e) => {
+          alert(e.error.message || 'An error occurred. Please try again.')
+          this.loginForm.reset();
+        }
+      });
   }
 }

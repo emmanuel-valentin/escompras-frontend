@@ -1,19 +1,19 @@
 <div class="bg-gray-50">
   <a class="block relative h-48 rounded">
     <img
-      alt="ecommerce"
+      alt="{{ post.title }}"
       class="object-cover object-center w-full h-full block"
-      src="https://dummyimage.com/420x260"
+      src="{{ post.photos.at(-1)!.photoFilename| image }}"
     />
   </a>
   <div class="flex flex-col gap-1 mt-4 p-4">
-    <h3 class="text-main bg-blue-50 text-xs w-fit p-2 rounded-md tracking-widest title-font mb-1">
-      Category
-    </h3>
-    <h2 class="text-gray-900 title-font font-medium">The Catalyzer</h2>
+    <p class="text-main bg-blue-50 text-xs w-fit p-2 rounded-md tracking-widest title-font mb-1">
+      {{ post.tags[0].tag }}
+    </p>
+    <h2 class="text-gray-900 title-font font-medium">{{ post.title }}</h2>
     <div class="flex flex-col gap-2 text-main-200 text-lg">
-      <p>$16.00</p>
-      <button class="flex justify-center items-center bg-green-100 w-full gap-2 px-4 py-2">
+      <p>{{ post.price | currency:'MXN' }}</p>
+      <button *ngIf="showCartButton" class="flex justify-center items-center bg-green-100 w-full gap-2 px-4 py-2">
         <div class="pi pi-cart-plus text-2xl text-green-700"></div>
         <p class="text-green-700 text-center">Añadir al carrito</p>
       </button>

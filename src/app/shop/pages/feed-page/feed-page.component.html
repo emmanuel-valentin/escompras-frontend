@@ -1,10 +1,22 @@
-<section class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
-  <app-shop-post-feed></app-shop-post-feed>
-  <app-shop-post-feed></app-shop-post-feed>
-  <app-shop-post-feed></app-shop-post-feed>
-  <app-shop-post-feed></app-shop-post-feed>
-  <app-shop-post-feed></app-shop-post-feed>
-  <app-shop-post-feed></app-shop-post-feed>
-  <app-shop-post-feed></app-shop-post-feed>
-  <app-shop-post-feed></app-shop-post-feed>
+<section class="mt-10">
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8"
+    *ngIf="posts.length > 0; else noPosts"
+  >
+    <app-shop-post-feed
+      [post]="post"
+      [showCartButton]="true"
+      [routerLink]="['/shop/post', post.postId]" routerLinkActive="router-link-active"
+      *ngFor="let post of posts"
+    ></app-shop-post-feed>
+  </div>
 </section>
+
+<ng-template #noPosts>
+  <div
+    class="col-span-1 md:col-span-2 lg:col-span-4 flex flex-col justify-center items-center gap-4 my-10 text-gray-400"
+  >
+    <div class="pi pi-file-o text-[200px]"></div>
+    <p class="text-center text-xl w-full">No hay publicaciones de productos</p>
+  </div>
+</ng-template>
