@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { MyCartComponent } from './components/my-cart/my-cart.component';
 import { UserComponent } from './components/user/user.component';
+import { ProductComponent } from './components/product/product.component';
 
 export const routes: Routes = [
   { "path": "", "component": FeedComponent },
@@ -11,5 +12,6 @@ export const routes: Routes = [
   { "path": "signin", "component": SigninComponent },
   { "path": "cart", "component": MyCartComponent },
   { "path": "user", "component": UserComponent },
+  { "path": "product", "component": ProductComponent },
   { "path": "**", "redirectTo": "", "pathMatch": "full" }
 ];
