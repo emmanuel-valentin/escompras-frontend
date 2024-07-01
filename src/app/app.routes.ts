@@ -1,15 +1,21 @@
 import { Routes } from '@angular/router';
-import { FeedComponent } from './components/feed/feed.component';
-import { LoginComponent } from './components/login/login.component';
-import { SigninComponent } from './components/signin/signin.component';
-import { MyCartComponent } from './components/my-cart/my-cart.component';
-import { UserComponent } from './components/user/user.component';
+import { AuthLayoutComponent } from './auth/components/auth-layout/auth-layout.component';
+import { ShopLayoutComponent } from './shop/components/shop-layout/shop-layout.component';
 
 export const routes: Routes = [
-  { "path": "", "component": FeedComponent },
-  { "path": "login", "component": LoginComponent },
-  { "path": "signin", "component": SigninComponent },
-  { "path": "cart", "component": MyCartComponent },
-  { "path": "user", "component": UserComponent },
-  { "path": "**", "redirectTo": "", "pathMatch": "full" }
+  {
+    path: 'auth',
+    component: AuthLayoutComponent,
+    loadChildren: () => import('./auth/auth.routes').then(m => m.routes)
+  },
+  {
+    path: 'shop',
+    component: ShopLayoutComponent,
+    loadChildren: () => import('./shop/shop.routes').then(m => m.routes)
+  },
+  {
+    path: '',
+    redirectTo: 'shop',
+    pathMatch: 'full'
+  }
 ];
